@@ -421,6 +421,17 @@ class ImagePainterState extends State<ImagePainter> {
     }
   }
 
+  Future<void> loadImageFromBytes(Uint8List bytes) async {
+    _isLoaded.value = false;
+    _image = await _convertImage(bytes);
+    if (_image == null) {
+      throw ("Image couldn't be resolved from provided byteArray.");
+    } else {
+      _setStrokeMultiplier();
+    }
+    _isLoaded.value = true;
+  }
+
   ///Dynamically sets stroke multiplier on the basis of widget size.
   ///Implemented to avoid thin stroke on high res images.
   _setStrokeMultiplier() {
